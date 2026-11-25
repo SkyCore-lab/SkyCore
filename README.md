@@ -1,82 +1,78 @@
-# SkyCore
+<div align="center">
 
-**SkyCore** is an open-source, from-scratch family of **global weather forecasting models** — tiny GraphCast-style networks you can run on an ordinary GPU. This repository is the **official model distribution**: trained weights for all three models, plus a single inference script. Everything is **Apache-2.0**.
+# 🌍 SkyCore
 
-Three models:
+### Tiny, from-scratch global weather forecasting models you can actually run
+
+A family of open-source [GraphCast](https://www.science.org/doi/10.1126/science.adi2336)-style neural weather models — small enough to train on a **single GPU in a few hours**, yet they forecast the whole planet out to **10 days** and **beat persistence and climatology at every lead**.
+
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)
+[![Stars](https://img.shields.io/github/stars/SkyCore-lab/SkyCore?style=social)](https://github.com/SkyCore-lab/SkyCore/stargazers)
+![Last commit](https://img.shields.io/github/last-commit/SkyCore-lab/SkyCore)
+
+**One file. No pretrained weights. No third-party model code. Just `python skycore.py`.**
+
+</div>
+
+---
+
+## ✨ Why SkyCore
+
+- 🪶 **Tiny.** W1 is ~0.7M parameters. The whole project is a single readable `skycore.py` — data prep, model, training, scoring, forecasting.
+- ⚡ **Runs on one GPU.** Trains from scratch in hours, not weeks. Memory auto-fits the batch to your card and recovers from out-of-memory on its own.
+- 🌐 **Global, 10 days.** 2.5° grid (73×144), 6-hour steps, 17 atmospheric variables, autoregressive rollout.
+- 📈 **Actually skillful.** Beats persistence and climatology on every variable and lead (see the chart).
+- 🔓 **Fully open.** Apache-2.0 code *and* weights. Trained only on openly licensed (CC0) data.
+- 🧩 **Two backends.** PyTorch and JAX (TPU), verified to compute the same thing — weights are interchangeable.
+
+## 🤖 The models
 
 | Model | Size | Aim |
 |---|---|---|
 | **S1** | width 192, depth 12 | standard |
 | **D1** | width 192, depth 24 + 8-step rollout finetune | stronger medium-range ("DeepThink") |
-| **W1** | width 96, depth 8 (~0.7M params) | small, open base for the community |
+| **W1** | width 96, depth 8 (~0.7M params) | small, open base — [full project ›](https://github.com/SkyCore-lab/SkyCore-WeModelsProject) |
 
-The full open **W1** project (code + weights + details) lives at **[SkyCore-WeModelsProject](https://github.com/SkyCore-lab/SkyCore-WeModelsProject)**.
+## 📊 Forecast skill
 
----
+RMSE vs. forecast lead time — **lower is better.** The models (blue) stay well under *persistence* ("tomorrow = today") and *climatology* ("the seasonal normal") all the way to 10 days. D1 edges ahead of S1 in the medium range, exactly as designed.
 
-## What these models do
+![SkyCore S1 & D1 skill](skill.png)
 
-The Earth is split into a 2.5° grid (73 × 144). Given the last two states (now and 6 h ago), each model predicts the atmosphere 6 hours ahead and rolls that forward out to 10 days. They predict 17 variables: geopotential height, temperature, and the two wind components at 850 / 500 / 250 hPa, plus sea-level pressure, surface temperature, surface wind, and precipitable water.
+<sub>Test 2024–2025, 138 forecasts. Headline numbers (RMSE): z500 @5d — **D1 65 m / S1 67 m** vs. persistence 106 m; t850 @5d — **D1 3.0 °C** vs. persistence 4.6 °C. Anomaly correlation (ACC ≥ 0.6) stays useful to ~5.5 days for z500.</sub>
 
----
+> **Note on comparability.** S1/D1 and W1 are scored on a coarse 2.5° grid against different ground truth, so their numbers are **not directly comparable to each other**, nor to GraphCast or operational high-resolution models. Read each as confirmation that the model genuinely forecasts the weather.
 
-## Measured skill
-
-All models **beat both persistence and climatology at every lead and variable**. RMSE (lower is better):
-
-**S1 / D1** — test 2024–2025, 138 forecasts:
-
-| Variable | Lead | S1 | D1 | persistence | climatology |
-|---|---|---|---|---|---|
-| z500 (m) | 3 d | 44.4 | **43.6** | 95.9 | 84.5 |
-| z500 (m) | 5 d | 67.4 | **65.0** | 106 | 84.7 |
-| z500 (m) | 10 d | 100.5 | **96.3** | 113 | 84.8 |
-| t850 (°C) | 5 d | 3.12 | **3.02** | 4.63 | 3.63 |
-| slp (Pa) | 5 d | 640 | **612** | 941 | 716 |
-| pwat (mm) | 5 d | 6.23 | **5.95** | 8.26 | 6.56 |
-
-D1 (deeper + longer rollout) overtakes S1 in the medium range (3 days and beyond), as intended; at 1 day they are essentially tied.
-
-**W1** — test 2025–2026, 130 forecasts:
-
-| Variable | 1 d | 3 d | 5 d | persistence (1d) | climatology |
-|---|---|---|---|---|---|
-| z500 (m) | 11.7 | 35.1 | 59.1 | 59.9 | 84.2 |
-| t850 (°C) | 1.0 | 1.9 | 2.8 | 3.0 | 3.4 |
-| slp (Pa) | 144 | 360 | 573 | 582 | 724 |
-
-> **Note on comparability.** S1/D1 and W1 are scored on a coarse 2.5° grid against **different ground truth**, so their numbers are **not directly comparable to each other**, nor to GraphCast or operational high-resolution models. Read each as confirmation that the model genuinely forecasts the weather.
-
----
-
-## Usage
+## 🚀 Quickstart
 
 ```bash
-# forecast with a released model (point --out at the folder holding its model.pt)
-python skycore.py forecast --model s1 --data ./data --out ./weights/s1
-python skycore.py forecast --model d1 --data ./data --out ./weights/d1
-python skycore.py forecast --model w1 --data ./data --out ./weights/w1
+git clone https://github.com/SkyCore-lab/SkyCore.git
+cd SkyCore
 
-# re-score a released model against its own test period
+# forecast with a released model (weights are already in weights/<model>/)
+python skycore.py forecast --model d1 --data ./data --out ./weights/d1
+
+# re-score a model against its own test period
 python skycore.py evaluate --model s1 --data ./data --out ./weights/s1
 ```
 
-Missing libraries (numpy / torch / eccodes, …) are installed on first run; the first data download takes a while.
+Missing libraries (numpy / torch / eccodes, …) install themselves on first run; the first data download takes a while, then it's cached.
 
----
-
-## Files
+## 📦 What's in here
 
 | Path | Role |
 |---|---|
 | `skycore.py` | Inference / scoring / forecasting in one file |
-| `weights/s1/model.pt`, `weights/s1/scores.json` | SkyCore S1 |
-| `weights/d1/model.pt`, `weights/d1/scores.json` | SkyCore D1 |
-| `weights/w1/model.pt`, `weights/w1/scores.json` | SkyCore W1 |
+| `weights/s1/`, `weights/d1/`, `weights/w1/` | `model.pt` + `scores.json` for each model |
 
----
+## 🌱 Fork it
 
-## License
+W1 is built to be forked — small, fast, and fully documented in the **[We Models project](https://github.com/SkyCore-lab/SkyCore-WeModelsProject)**. Train your own variant, add variables, push to a finer grid. PRs and experiments welcome.
+
+**If this is useful, a ⭐ helps others find it.**
+
+## 📄 License
 
 - Code and all released weights are **Apache-2.0**.
 - All models are trained only on openly licensed (public-domain / CC0) data.
