@@ -4,11 +4,11 @@
 
 Three models:
 
-| Model | Size | Aim | Training data |
-|---|---|---|---|
-| **S1** | width 192, depth 12 | standard | NCEP/NCAR Reanalysis 1 |
-| **D1** | width 192, depth 24 + 8-step rollout finetune | stronger medium-range ("DeepThink") | NCEP/NCAR Reanalysis 1 |
-| **W1** | width 96, depth 8 (~0.7M params) | small, open base for the community | GFS analysis (NOAA NODD, CC0) |
+| Model | Size | Aim |
+|---|---|---|
+| **S1** | width 192, depth 12 | standard |
+| **D1** | width 192, depth 24 + 8-step rollout finetune | stronger medium-range ("DeepThink") |
+| **W1** | width 96, depth 8 (~0.7M params) | small, open base for the community |
 
 The full open **W1** project (code + weights + details) lives at **[SkyCore-WeModelsProject](https://github.com/SkyCore-lab/SkyCore-WeModelsProject)**.
 
@@ -24,7 +24,7 @@ The Earth is split into a 2.5° grid (73 × 144). Given the last two states (now
 
 All models **beat both persistence and climatology at every lead and variable**. RMSE (lower is better):
 
-**S1 / D1** — test 2024–2025, 138 forecasts (NCEP/NCAR Reanalysis 1):
+**S1 / D1** — test 2024–2025, 138 forecasts:
 
 | Variable | Lead | S1 | D1 | persistence | climatology |
 |---|---|---|---|---|---|
@@ -37,7 +37,7 @@ All models **beat both persistence and climatology at every lead and variable**.
 
 D1 (deeper + longer rollout) overtakes S1 in the medium range (3 days and beyond), as intended; at 1 day they are essentially tied.
 
-**W1** — test 2025–2026, 130 forecasts (GFS analysis):
+**W1** — test 2025–2026, 130 forecasts:
 
 | Variable | 1 d | 3 d | 5 d | persistence (1d) | climatology |
 |---|---|---|---|---|---|
@@ -45,7 +45,7 @@ D1 (deeper + longer rollout) overtakes S1 in the medium range (3 days and beyond
 | t850 (°C) | 1.0 | 1.9 | 2.8 | 3.0 | 3.4 |
 | slp (Pa) | 144 | 360 | 573 | 582 | 724 |
 
-> **Note on comparability.** S1/D1 and W1 are scored against **different ground truth** (Reanalysis 1 vs. GFS analysis) on a coarse 2.5° grid, so their numbers are **not directly comparable to each other**, nor to GraphCast or operational high-resolution models. Read each as confirmation that the model genuinely forecasts the weather.
+> **Note on comparability.** S1/D1 and W1 are scored on a coarse 2.5° grid against **different ground truth**, so their numbers are **not directly comparable to each other**, nor to GraphCast or operational high-resolution models. Read each as confirmation that the model genuinely forecasts the weather.
 
 ---
 
@@ -79,8 +79,4 @@ Missing libraries (numpy / torch / eccodes, …) are installed on first run; the
 ## License
 
 - Code and all released weights are **Apache-2.0**.
-
-## Acknowledgments
-
-- S1 / D1 training data: **NCEP/NCAR Reanalysis 1**, provided by NOAA PSL.
-- W1 training data: **GFS analysis** via **NOAA Open Data Dissemination (NODD)** (CC0 1.0).
+- All models are trained only on openly licensed (public-domain / CC0) data.
