@@ -78,4 +78,5 @@ SkyCore is distributed under the **KeeAI SkyCore License** (see [LICENSE](LICENS
 
 - **Free** for research and personal non-commercial use — display the credit **"By KeeAISkyCore"** when you publish.
 - **Commercial use** requires a paid plan (Standard / Partner): **[skycore.keeai.cloud/buy](https://skycore.keeai.cloud/buy)**.
+- The **W-series (W1)** is open-source under **Apache-2.0** — see the [We Models project](https://github.com/SkyCore-lab/SkyCore-WeModelsProject).
 - Provided "AS IS", with no warranty; not for safety-critical use.

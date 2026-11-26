@@ -3,13 +3,15 @@ KeeAI SkyCore License (KSL) v1.0
 
 Copyright (c) KeeAI SkyCore. All rights reserved.
 
-"The Models" means the SkyCore model weights (S, D, and W series) and the
+"The Models" means the SkyCore model weights (S and D series) and the
 accompanying code distributed under this license by KeeAI SkyCore ("we", "us").
 "You" means the individual or entity exercising rights under this license.
 
 This license replaces the previously used Apache-2.0 license for releases
 distributed under it going forward. A version previously released publicly under
 Apache-2.0 remains available under Apache-2.0 for that released version only.
+The W series (W1) is distributed separately under Apache-2.0 and is NOT
+restricted by this license; see the SkyCore We Models project.
 
 -------------------------------------------------------------------------------
 1. FREE TIER  (no payment)
