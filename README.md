@@ -6,7 +6,7 @@
 
 A family of open-source [GraphCast](https://www.science.org/doi/10.1126/science.adi2336)-style neural weather models — small enough to train on a **single GPU in a few hours**, yet they forecast the whole planet out to **10 days** and **beat persistence and climatology at every lead**.
 
-[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-KeeAI%20SkyCore-6aa6ff.svg)](LICENSE) [![Buy](https://img.shields.io/badge/commercial-buy%20a%20license-4fd6a3.svg)](https://skycore.keeai.cloud/buy)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)
 [![Stars](https://img.shields.io/github/stars/SkyCore-lab/SkyCore?style=social)](https://github.com/SkyCore-lab/SkyCore/stargazers)
 ![Last commit](https://img.shields.io/github/last-commit/SkyCore-lab/SkyCore)
@@ -23,7 +23,7 @@ A family of open-source [GraphCast](https://www.science.org/doi/10.1126/science.
 - ⚡ **Runs on one GPU.** Trains from scratch in hours, not weeks. Memory auto-fits the batch to your card and recovers from out-of-memory on its own.
 - 🌐 **Global, 10 days.** 2.5° grid (73×144), 6-hour steps, 17 atmospheric variables, autoregressive rollout.
 - 📈 **Actually skillful.** Beats persistence and climatology on every variable and lead (see the chart).
-- 🔓 **Fully open.** Apache-2.0 code *and* weights. Trained only on openly licensed (CC0) data.
+- 🔓 **Source-available.** Free for research & non-commercial use; commercial use via a paid plan. See [License](#-license).
 - 🧩 **Two backends.** PyTorch and JAX (TPU), verified to compute the same thing — weights are interchangeable.
 
 ## 🤖 The models
@@ -74,5 +74,8 @@ W1 is built to be forked — small, fast, and fully documented in the **[We Mode
 
 ## 📄 License
 
-- Code and all released weights are **Apache-2.0**.
-- All models are trained only on openly licensed (public-domain / CC0) data.
+SkyCore is distributed under the **KeeAI SkyCore License** (see [LICENSE](LICENSE)).
+
+- **Free** for research and personal non-commercial use — display the credit **"By KeeAISkyCore"** when you publish.
+- **Commercial use** requires a paid plan (Standard / Partner): **[skycore.keeai.cloud/buy](https://skycore.keeai.cloud/buy)**.
+- Provided "AS IS", with no warranty; not for safety-critical use.
